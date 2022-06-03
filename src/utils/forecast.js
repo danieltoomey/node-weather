@@ -24,8 +24,14 @@ const forecast = (longitude, latitude, callback) => {
         } else if (body.err) {
             callback('WeatherStack error:' + body.error)
         } else {
-            const {weather_descriptions, temperature, feelslike} = body.current
-            callback(undefined, 'At ' + latitude + ',' + longitude + ' the weather is ' + weather_descriptions[0] + '. It is currently ' + temperature + ' degrees out and it feels like ' + feelslike + '.')
+            const {weather_descriptions, temperature, feelslike, wind_speed, wind_dir} = body.current
+            var direction = ''
+            if (wind_dir == 'E') direction = 'East'
+            if (wind_dir == 'W') direction = 'West'
+            if (wind_dir == 'N') direction = 'North'
+            if (wind_dir == 'S') direction = 'South'
+            callback(undefined, 'At ' + latitude + ',' + longitude + 
+            ' the weather is ' + weather_descriptions[0] + '. It is currently ' + temperature + ' degrees out and it feels like ' + feelslike + '. The wind is ' + wind_speed + ' mph from the ' + direction)
         }
     })
 }
